@@ -107,7 +107,7 @@ function mouseUp(e) {
         nodos[i].dragging = false;
     }
 }
-//Cuando el mouse se mueve con la figura encima
+//Cuando el mouse se mueve con la figura 
 function mouseMove(e) {
     let mouseX = e.clientX - x_offset;
     let mouseY = e.clientY - y_offset;
@@ -138,7 +138,7 @@ function mouseMove(e) {
     }
 }
 
-// Redibujar circulos
+// Redibujar 
 function reDraw() {
     clearCanvas();
     ctx.strokeStyle = "black";
@@ -168,7 +168,7 @@ function Conector(nodo1, nodo2) {
     this.nodo2 = nodo2;
     this.text = "0";
 }
-
+//Regresa el nodo seleccionado 
 function getNodo(e) {
     let nodoSeleccionado;
     x_cord = e.clientX - x_offset;
@@ -180,7 +180,7 @@ function getNodo(e) {
     }
     return nodoSeleccionado;
 }
-
+//Limpia la selección de nodos
 function cleanSeleccion() {
     for (let i = 0; i < nodos.length; i++) {
         if (nodos[i].selected) {
@@ -206,13 +206,14 @@ function startLink(e) {
 
 function endLink(e) {
     endShape = getNodo(e);
-    //Check if the click actually was on a shape
     if (endShape) {
         endShape.selected = true;
         let valor = prompt("Ponga un valor a este conector:", " ");
         let connection = new Conector(startShape, endShape);
         if(valor!=null){
             connection.text=valor;
+        }else{
+            return;
         }
         startShape.nodos_adj.push(endShape);
         endShape.nodos_adj.push(startShape);
@@ -230,4 +231,40 @@ function DibujarConector(con){
     ctx.font = "16px Montserrat";
     ctx.fillText(con.text, (con.nodo2.x+con.nodo1.x)/2 , (con.nodo2.y+con.nodo1.y)/2);
     ctx.stroke();
+}
+
+//Borrar un Nodo
+function eraseShape(e) {
+    canvas.onclick = null;
+    x_cord = e.clientX - x_offset;
+    y_cord = e.clientY - y_offset;
+    let delShape = getNodo(e);
+    if (delShape) {
+        nodos.splice(nodos.indexOf(delShape), 1);
+        //Borra el nodo en el arreglo de nodos adjuntos en todas las figuras 
+        for (let i = 0; i < nodos.length; i++) {
+            for (let j = 0; j < nodos[i].nodos_adj.length; j++) {
+                if (Object.is(nodos[i].nodos_adj[j], delShape)) {
+                    nodos[i].nodos_adj.splice(j, 1);
+                }
+            }
+        }
+        //Optiene los index de todos los conectores de esa figura 
+        let delConn = [];
+        for (let i = 0; i < conectores.length; i++) {
+            if (Object.is(conectores[i].nodo1, delShape)) {
+                delConn.push(conectores[i]);
+            }
+            if (Object.is(conectores[i].nodo2, delShape)) {
+                delConn.push(conectores[i]);
+            }
+        }
+        //Borra todos los conectores de esa figura 
+        while (delConn.length > 0) {
+            for (let i = 0; i < conectores.length; i++) {
+                conectores.splice(conectores.indexOf(delConn.pop()), 1);
+            }
+        }
+        reDraw();
+    }
 }
