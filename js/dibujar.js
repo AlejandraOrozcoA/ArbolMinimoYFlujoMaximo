@@ -1,6 +1,8 @@
 //Arreglo de Nodos y Conectores 
 let nodos = [];
 let conectores = [];
+let startIndex;
+let endIndex;
 
 //Recupera información del  canvas 
 let canvas = document.getElementById('main-canvas');
@@ -58,8 +60,13 @@ function DibujarNodo(nod){
     ctx.fillStyle = nod.text_color;
     ctx.font = "12px Montserrat";
     ctx.fillText(nod.text, nod.x - nod.rx / 4, nod.y);
-    ctx.strokeStyle = nod.stroke_color;
-    ctx.lineWidth = 1;
+    if (nod.selected) {
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 4;
+    } else {
+        ctx.strokeStyle = nod.stroke_color;
+        ctx.lineWidth = 1;
+    }
     ctx.stroke();
 }
 
@@ -136,9 +143,13 @@ function reDraw() {
     clearCanvas();
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
+    for (let i = 0; i < conectores.length; i++) {
+        DibujarConector(conectores[i]);
+    }
     for (let i = 0; i < nodos.length; i++) {
         DibujarNodo(nodos[i]);
     }
+    
 }
 //Limpia el canvas 
 function clearCanvas() {
@@ -148,4 +159,68 @@ function clearCanvas() {
 function limpiarPantalla() {
     clearCanvas();
     nodos = [];
+}
+
+
+//Definición de los conectores
+function Conector(nodo1, nodo2) {
+    this.nodo1 = nodo1;
+    this.nodo2 = nodo2;
+}
+
+function getNodo(e) {
+    let nodoSeleccionado;
+    x_cord = e.clientX - x_offset;
+    y_cord = e.clientY - y_offset;
+    for (let i = 0; i < nodos.length; i++) {
+        if (mouseInShape(nodos[i], x_cord, y_cord)) {
+            nodoSeleccionado = nodos [i];
+        }
+    }
+    return nodoSeleccionado;
+}
+
+function cleanSeleccion() {
+    for (let i = 0; i < nodos.length; i++) {
+        if (nodos[i].selected) {
+            nodos[i].selected = false;
+        }
+    }
+    reDraw();
+}
+
+let startShape = null;
+let endShape = null;
+
+function startLink(e) {
+    startShape = getNodo(e);
+    if (startShape) {
+        canvas.onclick = endLink;
+        startShape.selected = true;
+        reDraw();
+    } else {
+        canvas.onclick = null;
+    }
+}
+
+function endLink(e) {
+    endShape = getNodo(e);
+    //Check if the click actually was on a shape
+    if (endShape) {
+        endShape.selected = true;
+        let connection = new Conector(startShape, endShape);
+        startShape.nodos_adj.push(endShape);
+        endShape.nodos_adj.push(startShape);
+        conectores.push(connection);
+        reDraw();
+    }
+    cleanSeleccion();
+    canvas.onclick = null;
+}
+
+function DibujarConector(con){
+    ctx.beginPath();
+    ctx.moveTo(con.nodo1.x, con.nodo1.y);
+    ctx.lineTo(con.nodo2.x, con.nodo2.y);
+    ctx.stroke();
 }
