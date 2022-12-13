@@ -64,7 +64,7 @@ function DibujarNodo(nod){
 }
 
 //Para arrastrar la figura 
-
+//Calcula que nodo esta tocando el mouse
 function mouseInShape(shape, mx, my) {
     if (shape instanceof Nodo) {
         let x = Math.pow(mx - shape.x, 2) / Math.pow(shape.rx, 2);
@@ -72,7 +72,7 @@ function mouseInShape(shape, mx, my) {
         return x + y <= 1;
     }
 }
-
+//Agarra la Figura
 function mouseDown(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -90,7 +90,7 @@ function mouseDown(e) {
     startX = mouseX;
     startY = mouseY;
 }
-
+//Suelta la figura
 function mouseUp(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -100,7 +100,7 @@ function mouseUp(e) {
         nodos[i].dragging = false;
     }
 }
-
+//Cuando el mouse se mueve con la figura encima
 function mouseMove(e) {
     let mouseX = e.clientX - x_offset;
     let mouseY = e.clientY - y_offset;
@@ -140,11 +140,11 @@ function reDraw() {
         DibujarNodo(nodos[i]);
     }
 }
-
+//Limpia el canvas 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-
+//Limpia la pantalla
 function limpiarPantalla() {
     clearCanvas();
     nodos = [];
