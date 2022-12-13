@@ -166,6 +166,7 @@ function limpiarPantalla() {
 function Conector(nodo1, nodo2) {
     this.nodo1 = nodo1;
     this.nodo2 = nodo2;
+    this.text = "0";
 }
 
 function getNodo(e) {
@@ -208,7 +209,11 @@ function endLink(e) {
     //Check if the click actually was on a shape
     if (endShape) {
         endShape.selected = true;
+        let valor = prompt("Ponga un valor a este conector:", " ");
         let connection = new Conector(startShape, endShape);
+        if(valor!=null){
+            connection.text=valor;
+        }
         startShape.nodos_adj.push(endShape);
         endShape.nodos_adj.push(startShape);
         conectores.push(connection);
@@ -222,5 +227,7 @@ function DibujarConector(con){
     ctx.beginPath();
     ctx.moveTo(con.nodo1.x, con.nodo1.y);
     ctx.lineTo(con.nodo2.x, con.nodo2.y);
+    ctx.font = "16px Montserrat";
+    ctx.fillText(con.text, (con.nodo2.x+con.nodo1.x)/2 , (con.nodo2.y+con.nodo1.y)/2);
     ctx.stroke();
 }
