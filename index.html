@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Metodos Cuantitativos</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/gradient-navbar.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-md" id="app-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./Index.html">Tercera Evaluación</a>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item me-2">
+                        <a href="./Index.html" class="nav-link">Árbol de extensión mínima</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="./Index.html" class="nav-link">Flujo máximo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row" style="height: 88%;">
+        <div class="col-lg-3 col-xxl-3 ">
+            <div class="card form-card">
+                <div class="card-body">
+                    <h5 class="card-title">Árbol de extensión mínima</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Dibuje el Arbol</h6>
+                    <form>
+                        <button class="btn btn-primary " type="button">
+                            <img class="iconButton" src="img/Circulo.svg">
+                        </button>
+                        <button class="btn btn-primary " type="button">
+                            <img class="iconButton" src="img/Conector.svg">
+                        </button>
+                    </form>
+                    <br>
+                    <h6 class="card-subtitle mb-2 text-muted">Elija el metodo que se utilizará para resolver el problema</h6>
+                    <form>
+                        <select class="custom-select form-control my-1 mr-sm-2" id="busqueda">
+                            <option selected>....</option>
+                            <option value="1">Kruskal</option>
+                            <option value="2">Prim</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="container containerDibujo">
+                <canvas id="main-canvas">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/dibujar.js"></script>
+</html>
