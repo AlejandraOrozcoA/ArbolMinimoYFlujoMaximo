@@ -18,12 +18,20 @@ canvas.onmousedown = mouseDown;
 canvas.onmouseup = mouseUp;
 canvas.onmousemove = mouseMove;
 
+//Texto para los nodos 
+let txt = [
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+    "U", "V", "W", "X", "Y", "Z"
+];
+let countTXT=0;
+
 //Definición de los nodos 
 function Nodo(x, y) {
     this.x = x;
     this.y = y;
     this.rx = 25;
-    this.text = "A";
+    this.text = "";
     this.bg_color = "#FFFFFF";
     this.text_color = "black";
     this.stroke_color = "black";
@@ -38,6 +46,8 @@ function CrearNodo(e){
         let y_cord = e.clientY - y_offset;
         canvas.onclick = null;
         let nod = new Nodo(x_cord,y_cord);
+        nod.text=txt[countTXT];
+        countTXT++;
         nodos.push(nod)
         ctx.beginPath();
         ctx.arc(nod.x, nod.y, 30, 0, 2 * Math.PI);
@@ -159,6 +169,8 @@ function clearCanvas() {
 function limpiarPantalla() {
     clearCanvas();
     nodos = [];
+    conectores=[];
+    countTXT=0;
 }
 
 
