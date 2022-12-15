@@ -171,6 +171,7 @@ function limpiarPantalla() {
     nodos = [];
     conectores=[];
     countTXT=0;
+    removElementos();
 }
 
 
