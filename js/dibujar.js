@@ -159,6 +159,13 @@ function reDraw() {
     for (let i = 0; i < nodos.length; i++) {
         DibujarNodo(nodos[i]);
     }
+    if(document.title == "Flujo"){
+        limpiarCampos();
+        llenarCampos();
+    }
+    if(document.title == "Arbol"){
+        removElementos();
+    }
     
 }
 //Limpia el canvas 
@@ -173,6 +180,9 @@ function limpiarPantalla() {
     countTXT=0;
     if(document.title == "Arbol"){
         removElementos();
+    }
+    if(document.title == "Flujo"){
+        limpiarCampos();
     }
 }
 
@@ -282,7 +292,5 @@ function eraseShape(e) {
         }
         reDraw();
     }
-    if(document.title == "Arbol"){
-        removElementos();
-    }
+    
 }
