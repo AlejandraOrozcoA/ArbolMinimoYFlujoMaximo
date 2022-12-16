@@ -171,7 +171,9 @@ function limpiarPantalla() {
     nodos = [];
     conectores=[];
     countTXT=0;
-    removElementos();
+    if(document.title == "Arbol"){
+        removElementos();
+    }
 }
 
 
@@ -279,5 +281,8 @@ function eraseShape(e) {
             }
         }
         reDraw();
+    }
+    if(document.title == "Arbol"){
+        removElementos();
     }
 }
