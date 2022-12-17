@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Optimizacion</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/gradient-navbar.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-md" id="app-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./Index.html">Tercera Evaluación</a>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item me-2">
+                        <a href="./Index.html" class="nav-link">Árbol de extensión mínima</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="./flujoMax.html" class="nav-link">Flujo máximo</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="./optimizacion.html" class="nav-link">Optimización</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row" style="height: 88%;">
+        <div class="col-lg-3 col-xxl-3 ">
+            <div class="card form-card">
+                <div class="card-body">
+                    <h5 class="card-title">Problema de transporte</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Seleccione el número de fuentes y destinos</h6>
+                    <img src="./img/TablaEjemplo.jpg" width="100%">
+                    <form id="form-optimizar">
+                            <br>
+                            <label for="fuentes">Fuentes</label>
+                            <input class="form-control" type="number" min="0" id="fuentes" name="fuentes">
+                            <label for="destinos">Destinos</label>
+                            <input class="form-control" type="number" min="0" id="destinos" name="destinos">
+                            <br>
+                            <button class="btn btn-primary btnSimbolo" type="button" onclick="generarTabla();">
+                                Generar tabla
+                            </button>
+                            <br>
+                            <br>
+                            <div>
+                                <h6 class="card-subtitle mb-2 text-muted">Seleccione el metodo</h6>
+                                <select class="custom-select form-control my-1 mr-sm-2" id="metodo-tabla" name="metodo-tabla">
+                                    <option selected value="0">....</option>
+                                    <option value="1">Esquina noroeste</option>
+                                    <option value="2">Costo mínimo</option>
+                                    <option value="3">Vogel</option>
+                                </select>
+                                <br>
+                                <button class="btn btn-primary btnSimbolo" type="button">
+                                    Resolver
+                                </button>
+                            </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="div-tabla" class="col-lg-8 container-p" style="display:none;">
+            <h6 lass="card-subtitle mb-2 text-muted">Llene la tabla</h6>
+            <table id="tabla" name="tabla" class="table table-bordered">
+
+            </table>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/optimizacion.js"></script>
+</html>

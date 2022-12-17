@@ -34,3 +34,13 @@ html, body {
     padding-right: 5%;
     height: 100%;
 }
+
+.table-txt{
+    font-size: xx-small;
+    margin: 0%;
+    padding: 0%;
+}
+
+.container-p{
+    padding-top: 3%;
+}
