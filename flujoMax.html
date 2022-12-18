@@ -67,7 +67,7 @@
                                 <option selected>....</option>
                             </select>
                             <br>
-                            <button class="btn btn-primary btnSimbolo" type="button">
+                            <button class="btn btn-primary btnSimbolo" type="button" onclick="flujoMaximo()">
                                 Iniciar
                             </button>
                     </form>
@@ -78,7 +78,7 @@
             <div class="container containerDibujo">
                 <canvas id="main-canvas">
                 </canvas>
-                <table class="table">
+                <table id="tabla-max" class="table">
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col">#</th>
@@ -87,25 +87,8 @@
                         <th scope="col">Flujo total</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                        <td>prueba</td>
-                      </tr>
+                    <tbody id="tabla-body">
+
                     </tbody>
                   </table>
             </div>
