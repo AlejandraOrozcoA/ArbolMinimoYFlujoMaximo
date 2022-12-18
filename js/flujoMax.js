@@ -35,14 +35,23 @@ let recorrido = [];
 let conecRecorridos = [];
 let flujos = [];
 let flujoTotal = 0;
-let iteracion;
+let iteracion = 0;
 let nodosSatisfechos = [];
+let flag = true;
 //Obtiene los nodos inicial y final
 function  obtenerNodos(){
     let select = document.getElementById('nInicio');
     nodoI= select.options[select.selectedIndex].value;
     select = document.getElementById('nDestino');
     nodoD = select.options[select.selectedIndex].value;
+    reiniciar();
+}
+
+function reiniciar(){
+    recorrido = [];
+    conecRecorridos = [];
+    flujos = [];
+    nodoAnterior = null;
     for (let i = 0; i < nodos.length; i++) {
         if(nodos[i].text == nodoI){
             nodoActual = nodos[i];
@@ -77,17 +86,13 @@ function getConec(){
     }
     if (conec.length==0) {
         nodosSatisfechos.push(nodoActual);
-        recorrido = [];
-        conecRecorridos = [];
-        flujos = [];
-        nodoAnterior = null;
-        flujoMaximo();
+        reiniciar();
     }
 }
 
 //Encuentra el nodo con mayor capacidad conectado al nodo actual 
 function nodoSiguiente(){
-    
+    if (conec.length>0) {
         let mayor = parseInt(conec[0].text);
         let index = 0;
         for (let i = 1; i < conec.length; i++) {
@@ -106,7 +111,9 @@ function nodoSiguiente(){
         }
         recorrido.push(nodoActual);
         conec = [];
-
+    }else{
+        flag = false;
+    }
 }
 
 function imprimirRecorrido(){
@@ -126,6 +133,7 @@ function menorCapacidad(){
     }
     return menor;
 }
+
 //Actualizar Tabla 
 function actualizarTabla(){
     let tbody = document.getElementById('tabla-body');
@@ -148,19 +156,17 @@ function actualizarTabla(){
 }
 
 function flujoMaximo(){
-    iteracion = 0;
     obtenerNodos();
-    while(nodoActual != nodoD){
-        getConec();
-        nodoSiguiente();
+    while (flag) {
+        reiniciar();
+        while(nodoActual != nodoD){
+            getConec();
+            nodoSiguiente();
+        }
+        iteracion++;
+        actualizarTabla();
+        actualizarConectores();
     }
-    iteracion++;
-    actualizarTabla();
-    actualizarConectores();
-    recorrido = [];
-    conecRecorridos = [];
-    flujos = [];
-    nodoAnterior = null;
 }
 
 function actualizarConectores() {
