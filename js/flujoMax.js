@@ -33,11 +33,13 @@ let nodoActual;
 let conec = [];
 let recorrido = [];
 let conecRecorridos = [];
+let nodosRecorridos = [];
 let flujos = [];
 let flujoTotal = 0;
 let iteracion = 0;
 let nodosSatisfechos = [];
 let flag = true;
+
 //Obtiene los nodos inicial y final
 function  obtenerNodos(){
     let select = document.getElementById('nInicio');
@@ -50,6 +52,7 @@ function  obtenerNodos(){
 function reiniciar(){
     recorrido = [];
     conecRecorridos = [];
+    nodosRecorridos = [];
     flujos = [];
     nodoAnterior = null;
     for (let i = 0; i < nodos.length; i++) {
@@ -67,16 +70,16 @@ function reiniciar(){
 function getConec(){
     for (let i = 0; i < conectores.length; i++) {
         if(conectores[i].nodo1 == nodoActual ){
-            if (esSatisfecho(conectores[i].nodo2) == false) {
-                if(conectores[i].nodo1 != nodoAnterior && conectores[i].nodo2 != nodoAnterior){
+            if (esSatisfecho(conectores[i].nodo2) == false && estaRecorrido(conectores[i].nodo2) == false) {
+                if(conectores[i].nodo2 != nodoAnterior){
                     if (parseInt(conectores[i].text) != 0) {
                         conec.push(conectores[i]);
                     }
                 }
             }
         }else if( conectores[i].nodo2 == nodoActual){
-            if (esSatisfecho(conectores[i].nodo1) == false) {
-                if(conectores[i].nodo1 != nodoAnterior && conectores[i].nodo2 != nodoAnterior){
+            if (esSatisfecho(conectores[i].nodo1) == false && estaRecorrido(conectores[i].nodo1) == false) {
+                if(conectores[i].nodo1 != nodoAnterior){
                     if (parseInt(conectores[i].text) != 0) {
                         conec.push(conectores[i]);
                     }
@@ -156,7 +159,6 @@ function actualizarTabla(){
 }
 
 function flujoMaximo(){
-    obtenerNodos();
     while (flag) {
         reiniciar();
         while(nodoActual != nodoD){
@@ -166,6 +168,7 @@ function flujoMaximo(){
         iteracion++;
         actualizarTabla();
         actualizarConectores();
+        reiniciar();
     }
 }
 
@@ -187,6 +190,17 @@ function esSatisfecho(n){
         if(n==nodosSatisfechos[i]){
             return true;
         }
+    }
+    return false;
+}
+
+function estaRecorrido(n){
+    for (let i = 0; i < recorrido.length; i++) {
+       for (let j = 0; j < nodos.length; j++) {
+            if (recorrido[i] == nodos[j].text) {
+                return true;
+            }
+       }
     }
     return false;
 }
