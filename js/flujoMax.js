@@ -39,6 +39,7 @@ let flujoTotal = 0;
 let iteracion = 0;
 let nodosSatisfechos = [];
 let flag = true;
+let contador;
 
 //Obtiene los nodos inicial y final
 function  obtenerNodos(){
@@ -46,7 +47,18 @@ function  obtenerNodos(){
     nodoI= select.options[select.selectedIndex].value;
     select = document.getElementById('nDestino');
     nodoD = select.options[select.selectedIndex].value;
-    reiniciar();
+    contador = nodos.length;
+    for (let i = 0; i < nodos.length; i++) {
+        if(nodos[i].text == nodoI){
+            nodoActual = nodos[i];
+            nodoI = nodos[i];
+            recorrido.push(nodoActual);
+        }
+        if (nodos[i].text == nodoD) {
+            nodoD = nodos[i];
+        }
+    }
+    flujoMaximo();
 }
 
 function reiniciar(){
@@ -54,16 +66,10 @@ function reiniciar(){
     conecRecorridos = [];
     nodosRecorridos = [];
     flujos = [];
+    conec = [];
     nodoAnterior = null;
-    for (let i = 0; i < nodos.length; i++) {
-        if(nodos[i].text == nodoI){
-            nodoActual = nodos[i];
-            recorrido.push(nodoActual);
-        }
-        if (nodos[i].text == nodoD) {
-            nodoD = nodos[i];
-        }
-    }
+    nodoActual = nodoI;
+    recorrido.push(nodoActual);
 }
 
 //Obtiene los conectores del nodo actual 
@@ -89,7 +95,6 @@ function getConec(){
     }
     if (conec.length==0) {
         nodosSatisfechos.push(nodoActual);
-        reiniciar();
     }
 }
 
@@ -98,24 +103,47 @@ function nodoSiguiente(){
     if (conec.length>0) {
         let mayor = parseInt(conec[0].text);
         let index = 0;
-        for (let i = 1; i < conec.length; i++) {
-            if (parseInt(conec[i].text)>mayor) {
-                mayor = parseInt(conec[i].text); 
-                index = i;
-            }  
+        if (conec.length>1) {
+            for (let i = 1; i < conec.length; i++) {
+                if (parseInt(conec[i].text)>mayor) {
+                    mayor = parseInt(conec[i].text); 
+                    index = i;
+                }  
+            }
+            conecRecorridos.push(conec[index]);
+            flujos.push(parseInt(conec[index].text));
+            nodoAnterior = nodoActual;
+            if (conec[index].nodo1 != nodoActual) {
+                nodoActual = conec[index].nodo1;
+            } else {
+                nodoActual = conec[index].nodo2;
+            }
+            recorrido.push(nodoActual);
+            conec = [];
+            return true;
+        }else if(conec.length == 1){
+            conecRecorridos.push(conec[0]);
+            flujos.push(parseInt(conec[0].text));
+            nodoAnterior = nodoActual;
+            if (conec[0].nodo1 != nodoActual) {
+                nodoActual = conec[0].nodo1;
+            } else {
+                nodoActual = conec[0].nodo2;
+            }
+            recorrido.push(nodoActual);
+            conec = [];
+            return true;
         }
-        conecRecorridos.push(conec[index]);
-        flujos.push(parseInt(conec[index].text));
-        nodoAnterior = nodoActual;
-        if (conec[index].nodo1 != nodoActual) {
-            nodoActual = conec[index].nodo1;
-        } else {
-            nodoActual = conec[index].nodo2;
+    }else if(nodoActual != nodoI){
+        reiniciar();
+        getConec();
+        nodoSiguiente();
+        contador--;
+        if (contador == 0) {
+            return false;
         }
-        recorrido.push(nodoActual);
-        conec = [];
     }else{
-        flag = false;
+        return false;
     }
 }
 
@@ -160,15 +188,20 @@ function actualizarTabla(){
 
 function flujoMaximo(){
     while (flag) {
-        reiniciar();
         while(nodoActual != nodoD){
             getConec();
-            nodoSiguiente();
+            flag = nodoSiguiente();
+            if (flag == false) {
+                break;
+            }
         }
         iteracion++;
-        actualizarTabla();
-        actualizarConectores();
-        reiniciar();
+        if(nodoActual == nodoD){
+            actualizarTabla();
+            actualizarConectores();
+            reiniciar();
+        }
+        
     }
 }
 
@@ -196,11 +229,9 @@ function esSatisfecho(n){
 
 function estaRecorrido(n){
     for (let i = 0; i < recorrido.length; i++) {
-       for (let j = 0; j < nodos.length; j++) {
-            if (recorrido[i] == nodos[j].text) {
+            if (recorrido[i] == n) {
                 return true;
             }
-       }
     }
     return false;
 }
