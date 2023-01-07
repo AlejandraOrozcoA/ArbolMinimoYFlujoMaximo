@@ -43,6 +43,10 @@ let contador;
 
 //Obtiene los nodos inicial y final
 function  obtenerNodos(){
+    let btn = document.getElementById("btn_inicio");
+    btn.style.display = "none";
+    btn = document.getElementById("btn_sig");
+    btn.style.display =  "block";
     let select = document.getElementById('nInicio');
     nodoI= select.options[select.selectedIndex].value;
     select = document.getElementById('nDestino');
@@ -53,6 +57,7 @@ function  obtenerNodos(){
             nodoActual = nodos[i];
             nodoI = nodos[i];
             recorrido.push(nodoActual);
+            cambiarColor();
         }
         if (nodos[i].text == nodoD) {
             nodoD = nodos[i];
@@ -70,6 +75,7 @@ function reiniciar(){
     nodoAnterior = null;
     nodoActual = nodoI;
     recorrido.push(nodoActual);
+    cambiarColor();
 }
 
 //Obtiene los conectores del nodo actual 
@@ -120,6 +126,7 @@ function nodoSiguiente(){
             }
             recorrido.push(nodoActual);
             conec = [];
+            cambiarColor();
             return true;
         }else if(conec.length == 1){
             conecRecorridos.push(conec[0]);
@@ -132,6 +139,7 @@ function nodoSiguiente(){
             }
             recorrido.push(nodoActual);
             conec = [];
+            cambiarColor();
             return true;
         }
     }else if(nodoActual != nodoI){
@@ -187,7 +195,8 @@ function actualizarTabla(){
 }
 
 function flujoMaximo(){
-    while (flag) {
+    quitarColor();
+    if (flag) {
         while(nodoActual != nodoD){
             getConec();
             flag = nodoSiguiente();
@@ -202,6 +211,10 @@ function flujoMaximo(){
             reiniciar();
         }
         
+    }else{
+        let btn = document.getElementById("btn_sig");
+        btn.style.display = "none";
+        alert("Problema resuelto, el flujo maximo es:"+ flujoTotal);
     }
 }
 
@@ -234,4 +247,22 @@ function estaRecorrido(n){
             }
     }
     return false;
+}
+
+function cambiarColor(){
+    for (let j = 0 ; j < recorrido.length; j++) {
+        for (let i = 0; i < nodos.length; i++) {
+            if(nodos[i] == recorrido[j]){
+                nodos[i].stroke_color = "red";
+                reDraw();
+            }
+        } 
+    }
+}
+
+function quitarColor(){
+    for (let i = 0; i < nodos.length; i++) {
+            nodos[i].stroke_color = "black";
+    } 
+    reDraw();
 }
