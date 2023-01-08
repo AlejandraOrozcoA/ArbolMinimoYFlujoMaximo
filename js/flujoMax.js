@@ -43,14 +43,7 @@ let contador;
 
 //Obtiene los nodos inicial y final
 function  obtenerNodos(){
-    let btn = document.getElementById("btn_inicio");
-    btn.style.display = "none";
-    btn = document.getElementById("btn_sig");
-    btn.style.display =  "block";
-    let select = document.getElementById('nInicio');
-    nodoI= select.options[select.selectedIndex].value;
-    select = document.getElementById('nDestino');
-    nodoD = select.options[select.selectedIndex].value;
+    let condicion = validarSelects();
     contador = nodos.length;
     for (let i = 0; i < nodos.length; i++) {
         if(nodos[i].text == nodoI){
@@ -63,7 +56,9 @@ function  obtenerNodos(){
             nodoD = nodos[i];
         }
     }
-    flujoMaximo();
+    if (condicion) {
+        flujoMaximo();
+    }  
 }
 
 function reiniciar(){
@@ -265,4 +260,23 @@ function quitarColor(){
             nodos[i].stroke_color = "black";
     } 
     reDraw();
+}
+
+// Validaciones 
+
+function validarSelects() {
+    let select = document.getElementById('nInicio');
+    nodoI= select.options[select.selectedIndex].value;
+    select = document.getElementById('nDestino');
+    nodoD= select.options[select.selectedIndex].value;
+    if (nodoI == "...." || nodoD == "....") {
+        alert("Selecciona un nodo de inicio y destino valido");
+        return false;
+    }else{
+        let btn = document.getElementById("btn_inicio");
+        btn.style.display = "none";
+        btn = document.getElementById("btn_sig");
+        btn.style.display =  "block";
+        return true;
+    }
 }

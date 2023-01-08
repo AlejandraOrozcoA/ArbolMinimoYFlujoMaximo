@@ -233,17 +233,17 @@ function endLink(e) {
     endShape = getNodo(e);
     if (endShape) {
         endShape.selected = true;
-        let valor = prompt("Ponga un valor a este conector:", " ");
-        let connection = new Conector(startShape, endShape);
-        if(valor!=null){
+        let valor = prompt("Ponga un valor a este conector:");
+        if(valor!=null && !isNaN(valor) && parseInt(valor)>0){
+            let connection = new Conector(startShape, endShape);
             connection.text=valor;
+            startShape.nodos_adj.push(endShape);
+            endShape.nodos_adj.push(startShape);
+            conectores.push(connection);
+            reDraw();
         }else{
-            return;
-        }
-        startShape.nodos_adj.push(endShape);
-        endShape.nodos_adj.push(startShape);
-        conectores.push(connection);
-        reDraw();
+            alert("Inserta un valor numerico valido");
+        }  
     }
     cleanSeleccion();
     canvas.onclick = null;
