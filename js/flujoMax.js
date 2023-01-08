@@ -1,3 +1,7 @@
+//Modifica el tamaño  del canvas 
+canvas.width = window.innerWidth * (2 / 3);
+canvas.height = window.innerHeight * (2/3);
+
 // LLenar Campos
 function llenarCampos() {
     let select = document.getElementsByName("nInicio")[0];
@@ -263,7 +267,6 @@ function quitarColor(){
 }
 
 // Validaciones 
-
 function validarSelects() {
     let select = document.getElementById('nInicio');
     nodoI= select.options[select.selectedIndex].value;
