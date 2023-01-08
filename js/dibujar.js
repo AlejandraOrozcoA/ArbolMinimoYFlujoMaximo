@@ -183,6 +183,7 @@ function limpiarPantalla() {
     }
     if(document.title == "Flujo"){
         limpiarCampos();
+        window.location.reload();
     }
 }
 
