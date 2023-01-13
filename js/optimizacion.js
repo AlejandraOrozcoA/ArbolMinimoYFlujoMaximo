@@ -1,8 +1,8 @@
 
 function generarTabla(){
     document.getElementById("div-tabla").style.display = "block";
-    let numDestinos = parseInt(document.getElementById('destinos').value);
-    let numFuentes = parseInt(document.getElementById('fuentes').value);
+    let numDestinos = parseInt(document.getElementById('col').value);
+    let numFuentes = parseInt(document.getElementById('fil').value);
     let tabla = document.getElementById('tabla');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
@@ -36,8 +36,11 @@ function generarTabla(){
                 row.appendChild(cell);
             }else{
                 let cell = document.createElement('td');
+                var textoCelda3 = document.createElement("input");
+                textoCelda3.setAttribute("id","t".concat(i.toString(),"_",j.toString()));
+                textoCelda3.setAttribute("class","input-table");
+                cell.appendChild(textoCelda3);
                 row.appendChild(cell); 
-                 
             }
         }
         tbody.appendChild(row);
@@ -50,8 +53,15 @@ function generarTabla(){
             row.appendChild(cell);
         }else{
             let cell = document.createElement('td');
+            var textoCelda3 = document.createElement("input");
+            textoCelda3.setAttribute("id","t".concat(numFuentes,"_",numDestinos));
+            textoCelda3.setAttribute("class","input-table");
+            cell.appendChild(textoCelda3);
             row.appendChild(cell);
         }
     }
     tbody.appendChild(row);
+    //Deshabilita el boton para generar la tabla 
+    let boton = document.getElementById("btn_tabla");
+    boton.setAttribute("disabled",true);
 }
