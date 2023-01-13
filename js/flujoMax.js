@@ -125,7 +125,6 @@ function nodoSiguiente(){
             }
             recorrido.push(nodoActual);
             conec = [];
-            cambiarColor();
             return true;
         }else if(conec.length == 1){
             conecRecorridos.push(conec[0]);
@@ -138,7 +137,6 @@ function nodoSiguiente(){
             }
             recorrido.push(nodoActual);
             conec = [];
-            cambiarColor();
             return true;
         }
     }else if(nodoActual != nodoI){
@@ -207,6 +205,7 @@ function flujoMaximo(){
         if(nodoActual == nodoD){
             actualizarTabla();
             actualizarConectores();
+            cambiarColor();
             reiniciar();
         }
         
