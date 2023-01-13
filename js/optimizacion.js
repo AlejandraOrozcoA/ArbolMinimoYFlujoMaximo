@@ -27,17 +27,18 @@ function generarTabla(){
     encabezado.appendChild(cell);
     thead.appendChild(encabezado);
     //Crea el cuerpo de la tabla 
-    for (let i = 0; i < numFuentes; i++) {
+    for (let i = 1; i < numFuentes+1; i++) {
         let row = document.createElement('tr');
         for (let j = 0; j < numDestinos+2; j++) {
             if (j==0) {
                 let cell = document.createElement('th');
-                cell.innerHTML="Fuente "+(i+1);
+                cell.innerHTML="Fuente "+(i);
                 row.appendChild(cell);
             }else{
                 let cell = document.createElement('td');
                 var textoCelda3 = document.createElement("input");
                 textoCelda3.setAttribute("id","t".concat(i.toString(),"_",j.toString()));
+                //console.log("t".concat(i.toString(),"_",j.toString()));
                 textoCelda3.setAttribute("class","input-table");
                 cell.appendChild(textoCelda3);
                 row.appendChild(cell); 
@@ -54,7 +55,8 @@ function generarTabla(){
         }else{
             let cell = document.createElement('td');
             var textoCelda3 = document.createElement("input");
-            textoCelda3.setAttribute("id","t".concat(numFuentes,"_",numDestinos));
+            textoCelda3.setAttribute("id","t".concat(numFuentes+1,"_",j.toString()));
+            //console.log("t".concat(numFuentes+1,"_",j.toString()));
             textoCelda3.setAttribute("class","input-table");
             cell.appendChild(textoCelda3);
             row.appendChild(cell);
@@ -65,3 +67,52 @@ function generarTabla(){
     let boton = document.getElementById("btn_tabla");
     boton.setAttribute("disabled",true);
 }
+
+//Seleccionar el metodo
+function metodoSolucion(){
+    let selector = document.getElementById("metodo-tabla");
+    let aux;
+    let resultado;
+    switch (parseInt(selector.value)) {
+        case 1:
+            alert("Esquina noroeste");
+            aux = resuelve();
+            resultado=algoritmoEsquina(aux);
+            alert("El resultado es: "+ resultado);
+            break;
+        case 2:
+            alert("Costo mínimo");
+            aux = resuelve();
+            resultado=minimumCost(tabla);
+            alert("El resultado es: "+ resultado);
+            break;
+        case 3:
+            alert("Vogel");
+            aux = resuelve();
+            resultado=vogelApproximation(tabla);
+            alert("El resultado es: "+ resultado);
+            break;
+        default:
+            alert("Elija un metodo")
+            break;
+    }
+}
+
+
+function resuelve() {
+    var tabla=new Array();
+    var fuentes = parseInt(document.getElementById('fil').value);
+    var destinos = parseInt(document.getElementById('col').value);
+    for (var i = 1; i <= fuentes+1; i++) {
+      var col=new Array();
+      for (var j = 1; j <= destinos+1; j++) {
+        if(i<=fuentes || j <= destinos){
+            let cadena = "t".concat(i.toString(),"_",j.toString());
+            console.log("La cadena es: "+cadena);
+            col[j-1]=document.getElementById(cadena).value;
+        }
+      }
+      tabla[i-1] = col;
+    }
+    return tabla;
+  }
