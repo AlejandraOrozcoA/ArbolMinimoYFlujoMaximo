@@ -188,3 +188,21 @@ function llenaArreglos() {
     }
     return false;
   }
+
+//Siguiente paso del metodo
+function siguiente(){
+    let selector = document.getElementById("metodo-tabla");
+    switch (parseInt(selector.value)) {
+        case 1:
+            break;
+        case 2:
+            encontrarMinimo();
+            esTerminado();
+            break;
+        case 3:
+            break;
+        default:
+            alert("Elija un metodo");
+            break;
+    }
+}

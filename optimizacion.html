@@ -60,17 +60,22 @@
                                 <button class="btn btn-primary btnSimbolo" type="button" onclick="metodoSolucion();">
                                     Resolver
                                 </button>
+                                <button id="btn_sig" class="btn btn-primary btnSimbolo" type="button" onclick="siguiente();">
+                                    Siguiente
+                                </button>
                             </div>    
                     </form>
                 </div>
             </div>
         </div>
         <div id="div-tabla" class="col-lg-8 container-p" style="display:none;">
-            <h6 lass="card-subtitle mb-2 text-muted">Llene la tabla</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Llene la tabla</h6>
             <form id="form-tabla">
                 <table id="tabla" name="tabla" class="table table-bordered">
                 </table>
             </form>
+            <h6 id="resul" class="card-subtitle mb-2 text-muted" style="display: none;">Resultado:</h6>
+            <p id="txt_resul"></p>
         </div>
     </div>
 </body>
