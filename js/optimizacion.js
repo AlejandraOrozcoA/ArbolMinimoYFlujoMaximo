@@ -83,9 +83,8 @@ function metodoSolucion(){
     switch (parseInt(selector.value)) {
         case 1:
             alert("Esquina noroeste");
-            aux = resuelve();
-            resultado=algoritmoEsquina(aux);
-            alert("El resultado es: "+ resultado);
+            llenaArreglos();
+            iniciarEsquina();
             break;
         case 2:
             alert("Costo mínimo");
@@ -194,6 +193,8 @@ function siguiente(){
     let selector = document.getElementById("metodo-tabla");
     switch (parseInt(selector.value)) {
         case 1:
+            actualizarEsquina();
+            esTerminado();
             break;
         case 2:
             encontrarMinimo();

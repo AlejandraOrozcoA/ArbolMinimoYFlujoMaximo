@@ -8,12 +8,18 @@ function iniciarEsquina() {
 }
 
 function actualizarEsquina() {
+  let flag = false;
   for (let i = 1; i <= numFuentes; i++) {
     for (let j = 1; j <= numDestinos; j++) {
       if(esSatisfecha(filSatisfecha,i) == false && esSatisfecha(colSatisfecha,j) == false){
         esquina = celdas[i-1][j-1];
         actualizarValores();
+        flag = true;
+        break;
       }
+    }
+    if (flag == true) {
+      break;
     }
   }
 }
