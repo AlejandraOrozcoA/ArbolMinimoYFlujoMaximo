@@ -1,11 +1,15 @@
 let demanda = []; 
 let oferta = [];
 let celdas = [];
+let numDestinos;
+let numFuentes;
+let colSatisfecha = [];
+let filSatisfecha = [];
 
 function generarTabla(){
     document.getElementById("div-tabla").style.display = "block";
-    let numDestinos = parseInt(document.getElementById('col').value);
-    let numFuentes = parseInt(document.getElementById('fil').value);
+    numDestinos = parseInt(document.getElementById('col').value);
+    numFuentes = parseInt(document.getElementById('fil').value);
     let tabla = document.getElementById('tabla');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
@@ -101,20 +105,22 @@ function metodoSolucion(){
     }
 }
 
-function Celda(costo,valor,idInput){
+function Celda(costo,valor,idInput,fila,columna){
     this.costo = costo;
     this.valor = valor;
-    this.input = idInput;
+    this.idInput = idInput;
+    this.fila = fila;
+    this.columna = columna;
 }
 
-function CeldaOfertaDemanda(valor,idInput){
+function CeldaOfertaDemanda(valor,idInput,fila,columna){
     this.valor = valor;
-    this.input = idInput;
+    this.idInput = idInput;
+    this.fila = fila;
+    this.columna = columna;
 }
 
 function llenaArreglos() {
-    let numDestinos = parseInt(document.getElementById('col').value);
-    let numFuentes = parseInt(document.getElementById('fil').value);
     //Crea matriz 2x2 con los costos de la tabla 
     let fila;
     for (let i = 1; i <= numFuentes; i++) {
@@ -122,23 +128,62 @@ function llenaArreglos() {
         for (let j = 1; j <= numDestinos; j++) {
             let id = 't'+i+'_'+j;
             let costo = document.getElementById(id).value;
-            let cell = new Celda(parseInt(costo),0,id);
+            let fil = i;
+            let col = j;
+            let cell = new Celda(parseInt(costo),0,id,fil,col);
             fila.push(cell);
         }
         celdas.push(fila);
     }
     //llena arreglo de oferta 
     for (let i = 1; i <= numFuentes ; i++) {
-        let id = 't'+i+'_'+(numDestinos+1);
+        let col = numDestinos+1;
+        let id = 't'+i+'_'+col;
         let ofer = document.getElementById(id).value;
-        let cell = new CeldaOfertaDemanda(ofer,id);
+        let cell = new CeldaOfertaDemanda(ofer,id,i,col);
         oferta.push(cell);
     }
     //llena arreglo de demanda 
     for (let j = 1; j <= numDestinos; j++) {
-        let id = 't'+(numFuentes+1)+'_'+j;
+        let fil = numFuentes+1;
+        let id = 't'+fil+'_'+j;
         let deman= document.getElementById(id).value;
-        let cell = new CeldaOfertaDemanda(deman,id);
+        let cell = new CeldaOfertaDemanda(deman,id,fil,j);
         demanda.push(cell);
+    }
+  }
+
+  //Actualizar Tabla 
+  function ActualizarTabla() {
+    for (let i = 0; i < oferta.length; i++) {
+        for (let j = 0; j < demanda.length; j++) {
+            let cell = document.getElementById(celdas[i][j].idInput);   
+            cell.value = celdas[i][j].costo+" X "+celdas[i][j].valor;
+        }
+    }
+    for (let i = 0; i < oferta.length; i++) {
+        let cell = document.getElementById(oferta[i].idInput); 
+        cell.value = oferta[i].valor;
+        if(oferta[i].valor == 0){
+            filSatisfecha.push(i+1);
+        }
+        
+    }
+    for (let j = 0; j < demanda.length; j++) {
+        let cell = document.getElementById(demanda[j].idInput); 
+        cell.value = demanda[j].valor;
+        if(demanda[j].valor == 0){
+            colSatisfecha.push(j+1);
+        }
+    }
+  }
+
+  function esSatisfecha(array,n) {
+    for (let i = 0; i < array.length; i++) {
+      if (n == array[i]) {
+        return true;
+      }else{
+        return false
+      }
     }
   }
