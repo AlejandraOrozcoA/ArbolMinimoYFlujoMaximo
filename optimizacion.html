@@ -39,11 +39,11 @@
                     <form id="form-optimizar">
                             <br>
                             <label for="fuentes">Fuentes</label>
-                            <input class="form-control" type="number" min="0" id="fuentes" name="fuentes">
+                            <input class="form-control" type="number" min="0" name="filas" id="fil">
                             <label for="destinos">Destinos</label>
-                            <input class="form-control" type="number" min="0" id="destinos" name="destinos">
+                            <input class="form-control" type="number" min="0" name="columnas" id="col">
                             <br>
-                            <button class="btn btn-primary btnSimbolo" type="button" onclick="generarTabla();">
+                            <button id="btn_tabla"class="btn btn-primary btnSimbolo" type="button" onclick="generarTabla();" >
                                 Generar tabla
                             </button>
                             <br>
@@ -57,8 +57,11 @@
                                     <option value="3">Vogel</option>
                                 </select>
                                 <br>
-                                <button class="btn btn-primary btnSimbolo" type="button">
+                                <button class="btn btn-primary btnSimbolo" type="button" onclick="metodoSolucion();">
                                     Resolver
+                                </button>
+                                <button id="btn_sig" class="btn btn-primary btnSimbolo" type="button" onclick="siguiente();">
+                                    Siguiente
                                 </button>
                             </div>    
                     </form>
@@ -66,12 +69,18 @@
             </div>
         </div>
         <div id="div-tabla" class="col-lg-8 container-p" style="display:none;">
-            <h6 lass="card-subtitle mb-2 text-muted">Llene la tabla</h6>
-            <table id="tabla" name="tabla" class="table table-bordered">
-
-            </table>
+            <h6 class="card-subtitle mb-2 text-muted">Llene la tabla</h6>
+            <form id="form-tabla">
+                <table id="tabla" name="tabla" class="table table-bordered">
+                </table>
+            </form>
+            <h6 id="resul" class="card-subtitle mb-2 text-muted" style="display: none;">Resultado:</h6>
+            <p id="txt_resul"></p>
         </div>
     </div>
 </body>
 <script type="text/javascript" src="js/optimizacion.js"></script>
+<script type="text/javascript" src="js/EsquinaNoroeste.js"></script>
+<script type="text/javascript" src="js/Voguel.js"></script>
+<script type="text/javascript" src="js/CostoMinimo.js"></script>
 </html>

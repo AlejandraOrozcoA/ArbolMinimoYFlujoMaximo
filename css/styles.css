@@ -44,3 +44,9 @@ html, body {
 .container-p{
     padding-top: 3%;
 }
+
+.input-table{
+    border: 0;
+    border-color: white;
+    width: 100%;
+}
