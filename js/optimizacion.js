@@ -1,3 +1,6 @@
+let demanda = []; 
+let oferta = [];
+let celdas = [];
 
 function generarTabla(){
     document.getElementById("div-tabla").style.display = "block";
@@ -98,21 +101,44 @@ function metodoSolucion(){
     }
 }
 
+function Celda(costo,valor,idInput){
+    this.costo = costo;
+    this.valor = valor;
+    this.input = idInput;
+}
 
-function resuelve() {
-    var tabla=new Array();
-    var fuentes = parseInt(document.getElementById('fil').value);
-    var destinos = parseInt(document.getElementById('col').value);
-    for (var i = 1; i <= fuentes+1; i++) {
-      var col=new Array();
-      for (var j = 1; j <= destinos+1; j++) {
-        if(i<=fuentes || j <= destinos){
-            let cadena = "t".concat(i.toString(),"_",j.toString());
-            console.log("La cadena es: "+cadena);
-            col[j-1]=document.getElementById(cadena).value;
+function CeldaOfertaDemanda(valor,idInput){
+    this.valor = valor;
+    this.input = idInput;
+}
+
+function llenaArreglos() {
+    let numDestinos = parseInt(document.getElementById('col').value);
+    let numFuentes = parseInt(document.getElementById('fil').value);
+    //Crea matriz 2x2 con los costos de la tabla 
+    let fila;
+    for (let i = 1; i <= numFuentes; i++) {
+        fila = [];
+        for (let j = 1; j <= numDestinos; j++) {
+            let id = 't'+i+'_'+j;
+            let costo = document.getElementById(id).value;
+            let cell = new Celda(parseInt(costo),0,id);
+            fila.push(cell);
         }
-      }
-      tabla[i-1] = col;
+        celdas.push(fila);
     }
-    return tabla;
+    //llena arreglo de oferta 
+    for (let i = 1; i <= numFuentes ; i++) {
+        let id = 't'+i+'_'+(numDestinos+1);
+        let ofer = document.getElementById(id).value;
+        let cell = new CeldaOfertaDemanda(ofer,id);
+        oferta.push(cell);
+    }
+    //llena arreglo de demanda 
+    for (let j = 1; j <= numDestinos; j++) {
+        let id = 't'+(numFuentes+1)+'_'+j;
+        let deman= document.getElementById(id).value;
+        let cell = new CeldaOfertaDemanda(deman,id);
+        demanda.push(cell);
+    }
   }
