@@ -89,9 +89,8 @@ function metodoSolucion(){
             break;
         case 2:
             alert("Costo mínimo");
-            aux = resuelve();
-            resultado=minimumCost(tabla);
-            alert("El resultado es: "+ resultado);
+            llenaArreglos();
+            encontrarMinimo();
             break;
         case 3:
             alert("Vogel");
@@ -139,7 +138,7 @@ function llenaArreglos() {
     for (let i = 1; i <= numFuentes ; i++) {
         let col = numDestinos+1;
         let id = 't'+i+'_'+col;
-        let ofer = document.getElementById(id).value;
+        let ofer = parseInt(document.getElementById(id).value);
         let cell = new CeldaOfertaDemanda(ofer,id,i,col);
         oferta.push(cell);
     }
@@ -147,7 +146,7 @@ function llenaArreglos() {
     for (let j = 1; j <= numDestinos; j++) {
         let fil = numFuentes+1;
         let id = 't'+fil+'_'+j;
-        let deman= document.getElementById(id).value;
+        let deman= parseInt(document.getElementById(id).value);
         let cell = new CeldaOfertaDemanda(deman,id,fil,j);
         demanda.push(cell);
     }
@@ -179,11 +178,13 @@ function llenaArreglos() {
   }
 
   function esSatisfecha(array,n) {
+    if (array.length == 0) {
+        return false;
+    }
     for (let i = 0; i < array.length; i++) {
       if (n == array[i]) {
         return true;
-      }else{
-        return false
       }
     }
+    return false;
   }
