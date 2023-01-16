@@ -94,6 +94,7 @@ function metodoSolucion(){
         case 3:
             alert("Vogel");
             llenaArreglos();
+            calcularPenalizacion();
             break;
         default:
             alert("Elija un metodo")
@@ -199,6 +200,8 @@ function siguiente(){
             esTerminado();
             break;
         case 3:
+            calcularPenalizacion();
+            esTerminado();
             break;
         default:
             alert("Elija un metodo");

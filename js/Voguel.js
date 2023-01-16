@@ -8,6 +8,8 @@ let num1 = Number.MAX_SAFE_INTEGER;
 let num2 = Number.MAX_SAFE_INTEGER;
 
 function  calcularPenalizacion() {
+  filP = [];
+  colP = [];
   //Penalizacion por fila 
   for (let i = 0; i < numFuentes; i++) {
     for (let j = 0; j < numDestinos; j++) {
@@ -21,7 +23,7 @@ function  calcularPenalizacion() {
         }
     }
     let penalizacion = num2-num1;
-    filP.push(penalizacion);
+    filP.push(penalizacion); 
     num1 = Number.MAX_SAFE_INTEGER;
     num2 = Number.MAX_SAFE_INTEGER;
   }
@@ -43,6 +45,7 @@ function  calcularPenalizacion() {
     num1 = Number.MAX_SAFE_INTEGER;
     num2 = Number.MAX_SAFE_INTEGER;
   }
+  mayorPenalizacion();
 }
 
 function Penalizacion(valor, index, pos){
@@ -71,4 +74,31 @@ function mayorPenalizacion() {
   } else {
     penalizacion = new Penalizacion(filPMax,indexI,'fila');
   }
+  encontrarMenor();
+}
+
+function encontrarMenor() {
+  let menor = Number.MAX_SAFE_INTEGER;
+  let index = penalizacion.index;
+
+  if (penalizacion.posicion == 'fila') {
+    for (let i = 0; i < numDestinos ; i++) {
+      if(esSatisfecha(filSatisfecha,index) == false && esSatisfecha(colSatisfecha,i) == false){
+        if (menor > celdas[index][i].costo) {
+          menor = celdas[index][i].costo;
+          celdaMinimo = celdas[index][i];
+        }
+      }
+    }
+  } else {
+    for (let i = 0; i < numFuentes; i++) {
+      if(esSatisfecha(filSatisfecha,i) == false && esSatisfecha(colSatisfecha,index) == false){
+        if (menor > celdas[i][index].costo) {
+          menor = celdas[i][index].costo;
+          celdaMinimo = celdas[index][i];
+        }
+      }
+    }
+  }
+  revisarOfertaDemanda();
 }
