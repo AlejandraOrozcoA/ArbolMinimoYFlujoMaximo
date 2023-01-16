@@ -93,9 +93,7 @@ function metodoSolucion(){
             break;
         case 3:
             alert("Vogel");
-            aux = resuelve();
-            resultado=vogelApproximation(tabla);
-            alert("El resultado es: "+ resultado);
+            llenaArreglos();
             break;
         default:
             alert("Elija un metodo")
