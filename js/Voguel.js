@@ -66,25 +66,21 @@ function mayorPenalizacion() {
   let indexI = 0;
   let indexJ = 0;
   for (let i = 0; i < filP.length; i++) {
-    if (esSatisfecha(filSatisfecha,i+1) == false) {
       if (filP[i] > filPMax) {
         filPMax = filP[i];
         indexI = i;
       }
-    }
   }
   for (let j = 0; j < colP.length; j++) {
-    if (esSatisfecha(colSatisfecha,j+1)==false) {
       if (colP[j] > colPMax) {
         colPMax = colP[j];
         indexJ = j;
       }
-    }
   }
   if (colPMax > filPMax) {
-    penalizacion = new Penalizacion(colPMax,indexJ,'columna');
+    penalizacion = new Penalizacion(colPMax,indexJ+1,'columna');
   } else {
-    penalizacion = new Penalizacion(filPMax,indexI,'fila');
+    penalizacion = new Penalizacion(filPMax,indexI+1,'fila');
   }
   encontrarMenor();
 }
@@ -95,21 +91,17 @@ function encontrarMenor() {
 
   if (penalizacion.posicion == 'fila') {
     for (let i = 0; i < numDestinos ; i++) {
-      //if(esSatisfecha(filSatisfecha,index) == false && esSatisfecha(colSatisfecha,i+1) == false){
-        if (menor > celdas[index][i].costo) {
-          menor = celdas[index][i].costo;
-          celdaMinimo = celdas[index][i];
+        if (menor > celdas[index-1][i].costo) {
+          menor = celdas[index-1][i].costo;
+          celdaMinimo = celdas[index-1][i];
         }
-      //}
     }
   } else {
     for (let i = 0; i < numFuentes; i++) {
-      //if(esSatisfecha(filSatisfecha,i+1) == false && esSatisfecha(colSatisfecha,index) == false){
-        if (menor > celdas[i][index].costo) {
-          menor = celdas[i][index].costo;
-          celdaMinimo = celdas[index][i];
+        if (menor > celdas[i][index-1].costo) {
+          menor = celdas[i][index-1].costo;
+          celdaMinimo = celdas[index-1][i];
         }
-      //}
     }
   }
   revisarOfertaDemanda();
